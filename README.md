@@ -9,6 +9,7 @@ This is the project for the **Data Mining (CO3029)** course at **Ho Chi Minh Cit
 | 3 | Nguyễn Đỗ Minh Quân | 2312833 | Data Preprocessing, Feature Engineering, Report Compilation, Slide Design |
 
 # Project Introduction
+
 **1. Motivation**
    - **High Practicality:** Predicting real estate prices is a problem of great practical value, influencing the decisions of buyers, sellers, and financial institutions.
    - **Classic KDD Problem:** This is a benchmark dataset on Kaggle that presents many typical KDD challenges.
@@ -42,6 +43,7 @@ Our project followed a systematic KDD pipeline:
   - Encoded ordinal features (e.g., ExterQual) into numerical values based on their rank (e.g., "Po" -> 1, "Fa" -> 2, ...).
  
 **2. Feature Engineering**
+
 We generated new features to improve model performance:
 - **Feature Simplification:**
   - Grouped ordinal features into simpler categories (e.g., OverallQual 1-10 was grouped into "bad", "average", "good").
@@ -56,17 +58,21 @@ We generated new features to improve model performance:
   - To capture non-linear relationships, we created 2nd-degree, 3rd-degree, and square-root features for the top 10 features most correlated with SalePrice (e.g., OverallQual-s2, GrLivArea-3).
 
 **3. Encoding & Scaling**
+
 - One-Hot Encoding: Used pd.get_dummies to convert all remaining nominal categorical features into dummy variables.
 - Scaling: Applied RobustScaler to the entire feature set. This was chosen for its robustness to outliers, which were present in the data.
 
 **4. Models Applied**
+
 Given the high dimensionality of the data after encoding (which can lead to Overfitting and Multicollinearity), we used Regularized Linear Regression models.
 1. **Lasso Regression (L1 Regularization):** Performs automatic feature selection by shrinking irrelevant feature weights to zero.
 2. **Ridge Regression (L2 Regularization):** Effectively handles multicollinearity by shrinking coefficients.
 3. **ElasticNet (L1 + L2 Hybrid):** A combination that balances the benefits of both Lasso and Ridge.
    
 We used the Cross-Validation versions of each model (e.g., LassoCV) to automatically tune their hyperparameters.
+
 **5. Evaluation Metric**
+
 The primary metric used was the Root Mean Squared Logarithmic Error (RMSLE).
 - This is the official metric for the Kaggle competition.
 - It measures the relative error (percentage) rather than the absolute error.
@@ -75,8 +81,10 @@ The primary metric used was the Root Mean Squared Logarithmic Error (RMSLE).
 $$RMSLE=\sqrt{\frac{1}{n}\sum_{i=1}^{n}(log(p_{i}+1)-log(a_{i}+1))^{2}}$$
 
 # Experimental Results
-We ran two experiments: (1) Without Feature Engineering (FE) and (2) With FE.
+We ran two experiments: **(1) Without Feature Engineering (FE)** and **(2) With FE**.
+
 **Experiment 1: Without Feature Engineering**
+
 | Model | RMSE (10-folds) | Std (10-folds) | Best Alpha | Features Dropped | Public Score (Kaggle) |
 | :--- | :--- | :--- | :--- | :--- | :--- |
 | Lasso | 0.121788 | 0.038904 | 0.001 | 199 / 268 | 0.12449 | 
